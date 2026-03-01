@@ -1,20 +1,21 @@
-<!---
+# Universal Shift Register (SN74LS194A compatible)
 
-This file is used to generate your project datasheet. Please fill in the information below and delete any unused
-sections.
+This TinyTapeout design implements the logic behaviour of the TI SN74LS194A / SN74194:
+- 4-bit register with shift-left, shift-right, parallel load, and hold
+- Async active-low clear (mapped to TinyTapeout `rst_n`)
 
-You can also include images in this folder and reference them in the markdown. Each image must be less than
-512 kb in size, and the combined size of all images must be less than 1 MB.
--->
+## Controls (ui_in)
+- ui[1:0] = {S1,S0} mode select  
+  - 00 hold  
+  - 01 shift right (SR enters QA)  
+  - 10 shift left  (SL enters QD)  
+  - 11 parallel load (A..D to QA..QD)
+- ui[2] = SR serial in (for shift right)
+- ui[3] = SL serial in (for shift left)
+- ui[7:4] = A,B,C,D parallel inputs
 
-## How it works
-
-Explain how your project works
-
-## How to test
-
-Explain how to use your project
-
-## External hardware
-
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any
+## Outputs (uo_out)
+- uo[0] = QA
+- uo[1] = QB
+- uo[2] = QC
+- uo[3] = QD
