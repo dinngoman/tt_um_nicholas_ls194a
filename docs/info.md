@@ -55,10 +55,8 @@ When `rst_n` is low, the register clears immediately to `0000` (asynchronous cle
 - Set `S1=0, S0=1`.
 - Set `SR=1` (leave `SL` don’t care).
 - Pulse `clk` once.
-- Expect `QA` becomes `1` and prior bits shift toward `QD`.
 
 4) **Shift left**
 - Set `S1=1, S0=0`.
 - Set `SL=1` (leave `SR` don’t care).
 - Pulse `clk` once.
-- Expect `QD` becomes `1` and prior bits shift toward `QA`.
