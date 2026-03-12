@@ -4,7 +4,6 @@
 # SN74LS194A-Compatible 4-Bit Universal Shift Register
 
 ### TinyTapeout -- TTSKY26a (SKY130)
-
 This project was created as part of the TT Workshop at FOSSi Down Underflow 2026.\
 Thank you to the sponsorship by IQonIC Works Pty Ltd <https://iqonicworks.com>
 
