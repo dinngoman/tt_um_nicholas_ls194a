@@ -18,10 +18,10 @@ device.
 
 Supported operations:
 
--   Hold (no change)\
--   Shift Right\
--   Shift Left\
--   Parallel Load\
+-   Hold (no change)
+-   Shift Right
+-   Shift Left
+-   Parallel Load
 -   Asynchronous active-low clear
 
 The design is written in synthesizable Verilog and targets the
@@ -40,12 +40,11 @@ An asynchronous active-low reset (`rst_n`) clears all outputs to zero.
 
 ### Mode Select (S1, S0)
 
-  S1   S0   Operation
-  ---- ---- ---------------
-  0    0    Hold
-  0    1    Shift Right
-  1    0    Shift Left
-  1    1    Parallel Load
+      S1   S0   Operation
+      0    0    Hold
+      0    1    Shift Right
+      1    0    Shift Left
+      1    1    Parallel Load
 
 ------------------------------------------------------------------------
 
@@ -98,48 +97,45 @@ Serial data enters at **QD**.
 
 ### Inputs (`ui_in[7:0]`)
 
-  Pin   Signal   Description
-  ----- -------- ----------------------------
-  ui0   S0       Mode select
-  ui1   S1       Mode select
-  ui2   SR       Serial input (shift right)
-  ui3   SL       Serial input (shift left)
-  ui4   A        Parallel input
-  ui5   B        Parallel input
-  ui6   C        Parallel input
-  ui7   D        Parallel input
+    Pin   Signal   Description
+    ui0   S0       Mode select
+    ui1   S1       Mode select
+    ui2   SR       Serial input (shift right)
+    ui3   SL       Serial input (shift left)
+    ui4   A        Parallel input
+    ui5   B        Parallel input
+    ui6   C        Parallel input
+    ui7   D        Parallel input
 
 ------------------------------------------------------------------------
 
 ### Outputs (`uo_out[7:0]`)
 
-  Pin        Signal   Description
-  ---------- -------- ---------------------
-  uo0        QA       Register bit 0
-  uo1        QB       Register bit 1
-  uo2        QC       Register bit 2
-  uo3        QD       Register bit 3
-  uo4--uo7   ---      Unused (driven low)
+    Pin        Signal   Description
+    uo0        QA       Register bit 0
+    uo1        QB       Register bit 1
+    uo2        QC       Register bit 2
+    uo3        QD       Register bit 3
+    uo4--uo7   ---      Unused (driven low)
 
 ------------------------------------------------------------------------
 
 ### Global Signals
 
-  Signal   Description
-  -------- ---------------------------------------------------
-  clk      Positive-edge clock
-  rst_n    Asynchronous active-low reset
-  ena      TinyTapeout enable (always high during operation)
+    Signal   Description
+    clk      Positive-edge clock
+    rst_n    Asynchronous active-low reset
+    ena      TinyTapeout enable (always high during operation)
 
 ------------------------------------------------------------------------
 
 ## Implementation Notes
 
--   Fully synthesizable Verilog\
--   Positive-edge triggered\
--   Asynchronous reset\
--   No bidirectional IO used\
--   All unused outputs driven low\
+-   Fully synthesizable Verilog
+-   Positive-edge triggered
+-   Asynchronous reset
+-   No bidirectional IO used
+-   All unused outputs driven low
 -   Designed for SKY130 digital flow
 
 ------------------------------------------------------------------------
@@ -148,10 +144,10 @@ Serial data enters at **QD**.
 
 The design has successfully completed:
 
--   RTL simulation (cocotb)\
--   Gate-level simulation\
--   GDS generation\
--   TinyTapeout precheck validation\
+-   RTL simulation (cocotb)
+-   Gate-level simulation
+-   GDS generation
+-   TinyTapeout precheck validation
 -   GitHub Actions CI
 
 Target shuttle: **TTSKY26a**
@@ -160,10 +156,10 @@ Target shuttle: **TTSKY26a**
 
 ## Applications
 
--   Educational digital logic demonstration\
--   Serial-to-parallel conversion\
--   Parallel-to-serial conversion\
--   Shift-based state machines\
+-   Educational digital logic demonstration
+-   Serial-to-parallel conversion
+-   Parallel-to-serial conversion
+-   Shift-based state machines
 -   Basic digital building block
 
 ------------------------------------------------------------------------
