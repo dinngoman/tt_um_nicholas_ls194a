@@ -1,42 +1,172 @@
-![](../../workflows/gds/badge.svg) ![](../../workflows/docs/badge.svg) ![](../../workflows/test/badge.svg) ![](../../workflows/fpga/badge.svg)
+SN74LS194A-Compatible
+4-Bit Bidirectional Universal Shift Register
 
-# Tiny Tapeout Verilog Project Template
+TinyTapeout – TTSKY26a (SKY130)
 
-- [Read the documentation for project](docs/info.md)
+1. General Description
 
-## What is Tiny Tapeout?
+This design implements a 4-bit bidirectional universal shift register functionally compatible with the behavior of the classic SN74LS194A device.
 
-Tiny Tapeout is an educational project that aims to make it easier and cheaper than ever to get your digital and analog designs manufactured on a real chip.
+The register supports:
 
-To learn more and get started, visit https://tinytapeout.com.
+Parallel load
 
-## Set up your Verilog project
+Shift left
 
-1. Add your Verilog files to the `src` folder.
-2. Edit the [info.yaml](info.yaml) and update information about your project, paying special attention to the `source_files` and `top_module` properties. If you are upgrading an existing Tiny Tapeout project, check out our [online info.yaml migration tool](https://tinytapeout.github.io/tt-yaml-upgrade-tool/).
-3. Edit [docs/info.md](docs/info.md) and add a description of your project.
-4. Adapt the testbench to your design. See [test/README.md](test/README.md) for more information.
+Shift right
 
-The GitHub action will automatically build the ASIC files using [LibreLane](https://www.zerotoasiccourse.com/terminology/librelane/).
+Hold (no change)
 
-## Enable GitHub actions to build the results page
+Asynchronous active-low clear
 
-- [Enabling GitHub Pages](https://tinytapeout.com/faq/#my-github-action-is-failing-on-the-pages-part)
+The implementation is fully digital and synthesized using the TinyTapeout SKY130 flow for shuttle TTSKY26a.
 
-## Resources
+This project models functional behavior only and does not replicate LS-TTL electrical characteristics.
 
-- [FAQ](https://tinytapeout.com/faq/)
-- [Digital design lessons](https://tinytapeout.com/digital_design/)
-- [Learn how semiconductors work](https://tinytapeout.com/siliwiz/)
-- [Join the community](https://tinytapeout.com/discord)
-- [Build your design locally](https://www.tinytapeout.com/guides/local-hardening/)
+2. Features
 
-## What next?
+4-bit storage register (QA–QD)
 
-- [Submit your design to the next shuttle](https://app.tinytapeout.com/).
-- Edit [this README](README.md) and explain your design, how it works, and how to test it.
-- Share your project on your social network of choice:
-  - LinkedIn [#tinytapeout](https://www.linkedin.com/search/results/content/?keywords=%23tinytapeout) [@TinyTapeout](https://www.linkedin.com/company/100708654/)
-  - Mastodon [#tinytapeout](https://chaos.social/tags/tinytapeout) [@matthewvenn](https://chaos.social/@matthewvenn)
-  - X (formerly Twitter) [#tinytapeout](https://twitter.com/hashtag/tinytapeout) [@tinytapeout](https://twitter.com/tinytapeout)
-  - Bluesky [@tinytapeout.com](https://bsky.app/profile/tinytapeout.com)
+Bidirectional serial shifting
+
+Parallel data loading
+
+Mode control via 2-bit selector
+
+Asynchronous active-low reset
+
+Positive-edge clocked
+
+Synthesizable Verilog
+
+Clean TinyTapeout precheck and GDS generation
+
+3. Functional Block Diagram
+        +-----------------------------+
+        |        Mode Control         |
+        |         (S1, S0)            |
+        +---------------+-------------+
+                        |
+                        v
+        +-------------------------------------+
+        | 4-bit Register (QA QB QC QD)       |
+        |                                     |
+SR ---> | Shift Right Logic                   |
+SL ---> | Shift Left Logic                    |
+A–D --> | Parallel Load Logic                 |
+        +-------------------------------------+
+                        |
+                        v
+                    QA QB QC QD
+4. Operating Modes
+
+The register updates on the rising edge of clk.
+
+S1	S0	Operation
+0	0	Hold
+0	1	Shift Right
+1	0	Shift Left
+1	1	Parallel Load
+5. Functional Truth Table
+5.1 Asynchronous Clear
+
+When rst_n = 0:
+
+QA = QB = QC = QD = 0
+
+This operation overrides clock and mode inputs.
+
+5.2 Shift Right (S1 S0 = 0 1)
+QA ← SR
+QB ← QA(previous)
+QC ← QB(previous)
+QD ← QC(previous)
+
+Serial input enters at QA.
+
+5.3 Shift Left (S1 S0 = 1 0)
+QD ← SL
+QC ← QD(previous)
+QB ← QC(previous)
+QA ← QB(previous)
+
+Serial input enters at QD.
+
+5.4 Parallel Load (S1 S0 = 1 1)
+QA ← A
+QB ← B
+QC ← C
+QD ← D
+6. TinyTapeout Pin Configuration
+6.1 Dedicated Inputs (ui_in[7:0])
+Pin	Signal	Description
+ui0	S0	Mode select
+ui1	S1	Mode select
+ui2	SR	Serial input (shift right)
+ui3	SL	Serial input (shift left)
+ui4	A	Parallel input
+ui5	B	Parallel input
+ui6	C	Parallel input
+ui7	D	Parallel input
+6.2 Dedicated Outputs (uo_out[7:0])
+Pin	Signal	Description
+uo0	QA	Register bit 0
+uo1	QB	Register bit 1
+uo2	QC	Register bit 2
+uo3	QD	Register bit 3
+uo4–uo7	—	Unused (driven low)
+6.3 Global Signals
+Signal	Description
+clk	Positive-edge clock
+rst_n	Asynchronous active-low clear
+ena	Always enabled (TinyTapeout infrastructure)
+7. Electrical & Timing (Digital Model)
+
+Process: SKY130 CMOS
+
+Supply: Managed by TinyTapeout infrastructure
+
+Clock: External (default simulation 1 MHz)
+
+Reset: Asynchronous active-low
+
+Logic type: Fully synchronous digital (except async reset)
+
+Note: This is a behavioral CMOS implementation and does not model LS-TTL propagation delays or electrical drive characteristics.
+
+8. Verification Status
+
+The design has successfully completed:
+
+RTL simulation (cocotb)
+
+Gate-level simulation
+
+GDS generation
+
+TinyTapeout precheck validation
+
+GitHub Actions CI
+
+Target shuttle: TTSKY26a
+
+9. Applications
+
+Educational digital logic demonstration
+
+Building block for FSMs
+
+Serial-to-parallel conversion
+
+Parallel-to-serial conversion
+
+Experimental digital pipelines
+
+10. Compliance Statement
+
+This implementation reproduces the logical behavior of the SN74LS194A universal shift register but is not electrically or timing-compatible with LS-TTL hardware.
+
+11. Author
+
+Nicholas
+TinyTapeout TTSKY26a Submission
