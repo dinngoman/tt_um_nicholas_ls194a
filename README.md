@@ -5,9 +5,6 @@
 
 ### TinyTapeout -- TTSKY26a (SKY130)
 
-This project was created as part of the TT Workshop at FOSSi Down Underflow 2026.\
-Thank you to the sponsorship by IQonIC Works Pty Ltd <https://iqonicworks.com>
-
 ------------------------------------------------------------------------
 
 ## Overview
@@ -178,5 +175,5 @@ It is not electrically or timing compatible with LS-TTL hardware.
 
 ## Author
 
-nicholas@dinngoman\
+nicholas\
 TinyTapeout TTSKY26a Submission
