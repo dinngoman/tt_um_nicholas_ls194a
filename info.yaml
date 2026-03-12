@@ -1,37 +1,54 @@
+# Tiny Tapeout project information
 project:
-  title: "Universal Shift Register (SN74LS194A compatible)"
+  title: "SN74LS194A Universal Shift Register (4-bit)"
   author: "Nicholas"
-  description: "4-bit bidirectional universal shift register: hold, shift right, shift left, parallel load, async active-low clear."
+  discord: ""  # optional
+  description: "4-bit bidirectional universal shift register (hold, shift left/right, parallel load) with async active-low clear."
   language: "Verilog"
   clock_hz: 1000000
   tiles: "1x1"
 
-top_module: "tt_um_nicholas_ls194a"
-source_files:
-  - "project.v"
+  # Your top module name must start with "tt_um_". Make it unique by including your github username:
+  top_module: "tt_um_nicholas_ls194a"
 
+  # List your project's source files here.
+  # Source files must be in ./src and you must list each source file separately, one per line.
+  # Don't forget to also update `PROJECT_SOURCES` in test/Makefile.
+  source_files:
+    - "project.v"
+
+# The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
+# This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
 pinout:
+  # Inputs
   ui[0]: "S0 (mode select)"
   ui[1]: "S1 (mode select)"
-  ui[2]: "SR (serial in for shift-right; enters QA)"
-  ui[3]: "SL (serial in for shift-left; enters QD)"
+  ui[2]: "SR_SER (serial in for shift-right; enters QA)"
+  ui[3]: "SL_SER (serial in for shift-left; enters QD)"
   ui[4]: "A (parallel in)"
   ui[5]: "B (parallel in)"
   ui[6]: "C (parallel in)"
   ui[7]: "D (parallel in)"
+
+  # Outputs
   uo[0]: "QA"
   uo[1]: "QB"
   uo[2]: "QC"
   uo[3]: "QD"
-  uo[4]: "unused"
-  uo[5]: "unused"
-  uo[6]: "unused"
-  uo[7]: "unused"
-  uio[0]: "unused"
-  uio[1]: "unused"
-  uio[2]: "unused"
-  uio[3]: "unused"
-  uio[4]: "unused"
-  uio[5]: "unused"
-  uio[6]: "unused"
-  uio[7]: "unused"
+  uo[4]: ""
+  uo[5]: ""
+  uo[6]: ""
+  uo[7]: ""
+
+  # Bidirectional pins
+  uio[0]: ""
+  uio[1]: ""
+  uio[2]: ""
+  uio[3]: ""
+  uio[4]: ""
+  uio[5]: ""
+  uio[6]: ""
+  uio[7]: ""
+
+# Do not change!
+yaml_version: 6
