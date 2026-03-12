@@ -1,7 +1,7 @@
 project:
   title: "Universal Shift Register (SN74LS194A compatible)"
-  author: "Nicholas"
-  discord: ""
+  author: "nicholas"
+  discord: "dinngoman"
   description: "4-bit bidirectional universal shift register: hold, shift right, shift left, parallel load, async active-low clear."
   language: "Verilog"
   clock_hz: 1000000
